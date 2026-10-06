@@ -4,4 +4,12 @@
         <value lang="en">Chat</value>
         <value lang="pl">Czat</value>
     </node>
+    <node name="users">
+        <value lang="en">Users</value>
+        <value lang="pl">Użytkownicy</value>
+    </node>
+    <node name="groups">
+        <value lang="en">Groups</value>
+        <value lang="pl">Grupy</value>
+    </node>
 </root>

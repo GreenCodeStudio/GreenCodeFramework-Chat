@@ -20,6 +20,11 @@
             <null>YES</null>
         </column>
         <column>
+            <name>group_id</name>
+            <type>int</type>
+            <null>YES</null>
+        </column>
+        <column>
             <name>contentPlainText</name>
             <type>text</type>
             <null>no</null>
@@ -42,6 +47,10 @@
             <element>target_user_id</element>
         </index>
         <index>
+            <type>INDEX</type>
+            <element>group_id</element>
+        </index>
+        <index>
             <type>FOREIGN</type>
             <element>user_id</element>
             <reference name="user">
@@ -54,6 +63,31 @@
             <reference name="user">
                 <element>id</element>
             </reference>
+        </index>
+        <index>
+            <type>FOREIGN</type>
+            <element>group_id</element>
+            <reference name="chat_group">
+                <element>id</element>
+            </reference>
+        </index>
+    </table>
+    <table>
+        <name>chat_group</name>
+        <column>
+            <name>id</name>
+            <type>int</type>
+            <null>NO</null>
+            <autoincrement>YES</autoincrement>
+        </column>
+        <column>
+            <name>name</name>
+            <type>text</type>
+            <null>no</null>
+        </column>
+        <index>
+            <type>PRIMARY</type>
+            <element>id</element>
         </index>
     </table>
 </root>

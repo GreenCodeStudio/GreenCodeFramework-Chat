@@ -11,8 +11,14 @@ class ChatAjax extends \Core\AjaxController
     {
         new Chat()->sendMessage($data, Authorization::getUserId());
     }
+
     public function getInterUserMessages(int $id)
     {
         return new Chat()->getInterUserMessages(Authorization::getUserId(), $id);
+    }
+
+    public function getGroupMessages(int $id)
+    {
+        return new Chat()->getGroupMessages(Authorization::getUserId(), $id);
     }
 }

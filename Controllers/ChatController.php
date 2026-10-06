@@ -17,8 +17,10 @@ class ChatController extends \Common\PageStandardController
     {
 
         $users = new User()->getAllSummary();
+        $groups = new Chat()->getAllGroups();
         return [
-            'users' => $users
+            'users' => $users,
+            'groups' => $groups
         ];
     }
 
@@ -33,6 +35,20 @@ class ChatController extends \Common\PageStandardController
         $ret = $this->index_data();
         $ret['userId'] = $id;
         $ret['userMessages'] = new Chat()->getInterUserMessages(Authorization::getUserId(), $id);
+        return $ret;
+    }
+
+    public function group(int $id)
+    {
+        $this->addView('Chat', 'Chat');
+
+    }
+
+    public function group_data(int $id)
+    {
+        $ret = $this->index_data();
+        $ret['groupId'] = $id;
+        $ret['groupMessages'] = new Chat()->getGroupMessages(Authorization::getUserId(), $id);
         return $ret;
     }
 }
