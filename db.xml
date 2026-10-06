@@ -1,4 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
 
+    <table>
+        <name>chat_message</name>
+        <column>
+            <name>id</name>
+            <type>int</type>
+            <null>NO</null>
+            <autoincrement>YES</autoincrement>
+        </column>
+        <column>
+            <name>user_id</name>
+            <type>int</type>
+            <null>NO</null>
+        </column>
+        <column>
+            <name>target_user_id</name>
+            <type>int</type>
+            <null>YES</null>
+        </column>
+        <column>
+            <name>contentPlainText</name>
+            <type>text</type>
+            <null>no</null>
+        </column>
+        <column>
+            <name>added</name>
+            <type>datetime</type>
+            <null>no</null>
+        </column>
+        <index>
+            <type>PRIMARY</type>
+            <element>id</element>
+        </index>
+        <index>
+            <type>INDEX</type>
+            <element>user_id</element>
+        </index>
+        <index>
+            <type>INDEX</type>
+            <element>target_user_id</element>
+        </index>
+        <index>
+            <type>FOREIGN</type>
+            <element>user_id</element>
+            <reference name="user">
+                <element>id</element>
+            </reference>
+        </index>
+        <index>
+            <type>FOREIGN</type>
+            <element>target_user_id</element>
+            <reference name="user">
+                <element>id</element>
+            </reference>
+        </index>
+    </table>
 </root>

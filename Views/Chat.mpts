@@ -3,13 +3,6 @@
 
     </aside>
     <div class="chatMainWrapper">
-        <div class="conversation">
 
-        </div>
-        <div class="messageBoxWrapper">
-            <form>
-                <textarea></textarea>
-            </form>
-        </div>
     </div>
 </div>

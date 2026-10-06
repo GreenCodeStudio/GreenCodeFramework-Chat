@@ -2,31 +2,37 @@
 
 namespace Chat\Controllers;
 
+use Authorization\Authorization;
+use Chat\Chat;
 use User\User;
 
 class ChatController extends \Common\PageStandardController
 {
     public function index()
     {
-$this->addView('Chat','Chat');
+        $this->addView('Chat', 'Chat');
     }
+
     public function index_data()
     {
 
-        $users=(new User())->getAllSummary();
-        return[
-            'users'=>$users
+        $users = new User()->getAllSummary();
+        return [
+            'users' => $users
         ];
     }
+
     public function user(int $id)
     {
-        $this->addView('Chat','Chat');
+        $this->addView('Chat', 'Chat');
 
     }
+
     public function user_data(int $id)
     {
-        $ret=$this->index_data();
-        $ret['userId']=$id;
+        $ret = $this->index_data();
+        $ret['userId'] = $id;
+        $ret['userMessages'] = new Chat()->getInterUserMessages(Authorization::getUserId(), $id);
         return $ret;
     }
 }
