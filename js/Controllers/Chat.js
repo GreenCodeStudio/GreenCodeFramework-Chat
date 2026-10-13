@@ -75,12 +75,12 @@ export class index {
 
     loadMessages(messages) {
         const conversation = create('.conversation', {});
-        let prevMessage=null;
+        let prevMessage = null;
         for (const message of messages.reverse()) {
-            const authorChanged=prevMessage?.user_id!==message.user_id;
-            const addedChanged=prevMessage?.added!==message.added;
-            conversation.append(this.generateMessageElement(message, authorChanged||addedChanged, addedChanged));
-            prevMessage=message;
+            const authorChanged = prevMessage?.user_id !== message.user_id;
+            const addedChanged = prevMessage?.added !== message.added;
+            conversation.append(this.generateMessageElement(message, authorChanged || addedChanged, addedChanged));
+            prevMessage = message;
         }
         this.page.querySelector('.chatMainWrapper').append(
             create('.conversationWrapper', {}, conversation),
@@ -142,7 +142,7 @@ export class index {
                 className: message.isMe ? 'message isMe' : 'message',
                 data: {id: message.id}
             },
-            showAdded?create('.added', {text: message.added}):null,
+            showAdded ? create('.added', {text: message.added}) : null,
             showAuthor ? create('.author', {text: message.user_name + ' ' + message.user_surname}) : null,
             create('.content', {text: message.contentPlainText || '\u2007'}));
     }
