@@ -66,16 +66,28 @@ export class index {
     }
 
     loadUserChat(userMessages) {
-        this.page.querySelector('.chatMainWrapper').append(
-            create('.conversation', {}, ...userMessages.map(message => this.generateMessageElement(message)).reverse()),
-            this.createMessageFormWrapper()
-        )
+        this.loadMessages(userMessages)
     }
+
     loadGroupChat(groupMessages) {
+        this.loadMessages(groupMessages)
+    }
+
+    loadMessages(messages) {
+        const conversation = create('.conversation', {});
+        let prevMessage=null;
+        for (const message of messages.reverse()) {
+            const authorChanged=prevMessage?.user_id!==message.user_id;
+            const addedChanged=prevMessage?.added!==message.added;
+            conversation.append(this.generateMessageElement(message, authorChanged||addedChanged, addedChanged));
+            prevMessage=message;
+        }
         this.page.querySelector('.chatMainWrapper').append(
-            create('.conversation', {}, ...groupMessages.map(message => this.generateMessageElement(message)).reverse()),
+            create('.conversationWrapper', {}, conversation),
             this.createMessageFormWrapper()
         )
+
+        this.page.querySelector('.conversationWrapper').scrollTop = this.page.querySelector('.conversationWrapper').scrollHeight;
     }
 
     createMessageFormWrapper() {
@@ -92,7 +104,14 @@ export class index {
                             }
                         }
                     }
-                )
+                ),
+                create('button', {
+                    className: 'icon-send', type: 'submit', onclick: e => {
+                        e.preventDefault();
+                        this.sendMessage(e.target.previousSibling.value);
+                        e.target.previousSibling.value = '';
+                    }
+                })
             )
         )
     }
@@ -103,9 +122,9 @@ export class index {
             contentPlainText: content,
         })
         let messages;
-        if(this.openConfig.targetUserId) {
+        if (this.openConfig.targetUserId) {
             messages = (await Ajax.Chat.getInterUserMessages(this.openConfig.targetUserId)).reverse();
-        }else{
+        } else {
             messages = (await Ajax.Chat.getGroupMessages(this.openConfig.groupId)).reverse();
         }
         const conversation = this.page.querySelector('.conversation');
@@ -114,14 +133,18 @@ export class index {
                 conversation.append(this.generateMessageElement(message));
             }
         }
+        conversation.parentElement.scrollTop = conversation.parentElement.scrollHeight;
     }
 
-    generateMessageElement(message) {
+    generateMessageElement(message, showAuthor, showAdded) {
         console.log('message', message)
         return create('.message', {
-            className: message.isMe ? 'isMe' : '',
-            data: {id: message.id}
-        }, create('.added', {text: message.added}), create('.content', {text: message.contentPlainText}));
+                className: message.isMe ? 'message isMe' : 'message',
+                data: {id: message.id}
+            },
+            showAdded?create('.added', {text: message.added}):null,
+            showAuthor ? create('.author', {text: message.user_name + ' ' + message.user_surname}) : null,
+            create('.content', {text: message.contentPlainText || '\u2007'}));
     }
 }
 

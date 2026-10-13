@@ -27,7 +27,6 @@ class ChatController extends \Common\PageStandardController
     public function user(int $id)
     {
         $this->addView('Chat', 'Chat');
-
     }
 
     public function user_data(int $id)

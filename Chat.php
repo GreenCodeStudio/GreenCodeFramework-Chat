@@ -12,7 +12,9 @@ class Chat
     public function getInterUserMessages(int $user1, int $user2)
     {
         return DB::get("
-        SELECT cm.*, cm.user_id = :user1 as isMe FROM chat_message cm
+        SELECT cm.*, cm.user_id = :user1 as isMe, u.name as user_name, u.surname as user_surname
+        FROM chat_message cm
+        LEFT JOIN user u ON u.id = cm.user_id
                     WHERE (cm.user_id = :user1 AND cm.target_user_id = :user2) OR (cm.user_id = :user2 AND cm.target_user_id = :user1)
         ORDER BY cm.added DESC
         ", [
@@ -24,7 +26,9 @@ class Chat
     public function getGroupMessages(int $ownUserId, int $groupId)
     {
         return DB::get("
-        SELECT cm.*, cm.user_id = :ownUserId as isMe FROM chat_message cm
+        SELECT cm.*, cm.user_id = :ownUserId as isMe, u.name as user_name, u.surname as user_surname
+        FROM chat_message cm
+        LEFT JOIN user u ON u.id = cm.user_id
                     WHERE cm.group_id = :groupId
         ORDER BY cm.added DESC
         ", [
