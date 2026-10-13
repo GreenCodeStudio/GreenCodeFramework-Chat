@@ -3,13 +3,22 @@
     <node name="menu">
         <value lang="en">Chat</value>
         <value lang="pl">Czat</value>
+        <value lang="de">Chat</value>
+        <value lang="cs">Chat</value>
+        <value lang="ua">Чат</value>
     </node>
     <node name="users">
         <value lang="en">Users</value>
         <value lang="pl">Użytkownicy</value>
+        <value lang="de">Benutzer</value>
+        <value lang="cs">Uživatelé</value>
+        <value lang="ua">Користувачі</value>
     </node>
     <node name="groups">
         <value lang="en">Groups</value>
         <value lang="pl">Grupy</value>
+        <value lang="de">Gruppen</value>
+        <value lang="cs">Skupiny</value>
+        <value lang="ua">Групи</value>
     </node>
 </root>
