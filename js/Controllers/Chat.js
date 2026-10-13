@@ -29,7 +29,9 @@ export class index {
                                 {
                                     href: `/Chat/user/${user.id}`,
                                     'text': user.name + ' ' + user.surname,
-                                    onclick: () => {
+                                    onclick: (e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
                                         this.goToUser(user.id);
                                     }
                                 }
@@ -45,7 +47,9 @@ export class index {
                                 {
                                     href: `/Chat/group/${group.id}`,
                                     'text': group.name,
-                                    onclick: () => {
+                                    onclick: (e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
                                         this.goToGroup(group.id);
                                     }
                                 }
@@ -57,12 +61,19 @@ export class index {
         );
     }
 
-    goToUser(userId) {
+   async goToUser(userId) {
         history.pushState(null, '', `/Chat/user/${userId}`);
+
+        this.openConfig = {targetUserId: userId}
+
+            this.loadUserChat(await Ajax.Chat.getInterUserMessages(userId));
+
     }
 
-    goToGroup(groupId) {
+    async goToGroup(groupId) {
         history.pushState(null, '', `/Chat/group/${groupId}`);
+        this.openConfig = {groupId: groupId}
+        this.loadGroupChat(await Ajax.Chat.getGroupMessages(groupId));
     }
 
     loadUserChat(userMessages) {
@@ -74,6 +85,7 @@ export class index {
     }
 
     loadMessages(messages) {
+        this.page.querySelector('.chatMainWrapper').innerHTML = '';
         const conversation = create('.conversation', {});
         let prevMessage = null;
         for (const message of messages.reverse()) {

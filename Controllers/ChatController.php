@@ -10,6 +10,7 @@ class ChatController extends \Common\PageStandardController
 {
     public function index()
     {
+        $this->pushBreadcrumb(['title' => t('Chat.menu'), 'url' => '/Chat']);
         $this->addView('Chat', 'Chat');
     }
 
@@ -26,6 +27,7 @@ class ChatController extends \Common\PageStandardController
 
     public function user(int $id)
     {
+        $this->pushBreadcrumb(['title' => t('Chat.menu'), 'url' => '/Chat']);
         $this->addView('Chat', 'Chat');
     }
 
@@ -39,6 +41,7 @@ class ChatController extends \Common\PageStandardController
 
     public function group(int $id)
     {
+        $this->pushBreadcrumb(['title' => t('Chat.menu'), 'url' => '/Chat']);
         $this->addView('Chat', 'Chat');
 
     }

@@ -25,7 +25,7 @@
                     > a, > span {
                         display: block;
                         text-decoration: none;
-                        padding: 5px 10px;
+                        padding: 5px 10px 5px 18px;
                         color: #333;
                     }
 
@@ -110,6 +110,20 @@
                 grid-column: 1;
                 grid-row: 1;
                 justify-self: end;
+            }
+        }
+    }
+    @media(max-width: 500px){
+        grid-template-columns: 1fr;
+        .chatMainWrapper{
+            display: none;
+        }
+        &:has(.chatMainWrapper > *){
+            .chatMainWrapper{
+                display: grid;
+            }
+            >aside{
+                display:none;
             }
         }
     }
